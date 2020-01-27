@@ -25,16 +25,48 @@ function PasswordRequirements () {
 
         if (isNaN(length) === true) {
 
-            alert('Please type in a number as your password length');
+            alert('Please type in a number as your password length.');
             return;
         }
+
+        if (length > 129) {
+
+            alert("Sorry, your password length must be between 8 and 129 characrers.");
+        }
+
+
 
         if (length < 8) {
 
-            alert('Sorry, your password length must be between 8 and 129 characters');
+            alert('Sorry, your password length must be between 8 and 129 characters.');
 
             return;
         }
+
+        let containsNumbers = 
+        confirm("click OK to add numbers.");
+
+        let containsSpecialCharacters = 
+        confirm("Click OK to add special characters.");
+
+        let containsLowercasedLetters = 
+        confirm("Click OK to add lowercased letters.");
+
+        let containsUppercasedLetters = 
+        confirm("Click OK to add Uppercased Letter.");
+
+        if (
+            containsSpecialCharacters === false &&
+
+            containsNumbers === false &&
+
+            containsUppercasedLetters === false &&
+
+            containsLowercasedLetters === false
+          ) {
+            alert('Please select at least one character type');
+            return;
+          }
 }
 
 let generateBtn = document.querySelector('#generate');
