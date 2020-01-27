@@ -16,7 +16,7 @@ let upperCasedLetters = ['A','B','C','D','E','F',
                             'S','T','U','V','W','X',
                             'Y','Z'];
 
-function PasswordRequirements () {
+function PasswordRequirements() {
 
     let length = parseInt(
         
@@ -67,13 +67,77 @@ function PasswordRequirements () {
             alert('Please select at least one character type');
             return;
           }
+
+    let pwordOptions = {
+        length: length,
+
+        containsSpecialCharacters: containsSpecialCharacters,
+
+        containsNumbers: containsNumbers,
+
+        containsUppercasedLetters: containsUppercasedLetters,
+
+        containsLowercasedLetters: containsLowercasedLetters
+    };
+        
+          return pwordOptions;
 }
+
+function getRandomElement(arr) {
+    let randomValue = Math.floor(Math.random() * arr.length);
+    let randomElement = arr[randomValue];
+  
+    return randomElement;
+  }
+
+function generatePword() {
+    let options = PasswordRequirements();
+
+    let result = [];
+
+    let mixedCharacters = [];
+
+    let chosenCharacters = [];
+
+    if (options.containsSpecialCharacters) {
+        mixedCharacters = mixedCharacters.concat(specialCharacters);
+        chosenCharacters.push(getRandomElement(specialCharacters));
+    }
+
+    if (options.containsLowercasedLetters) {
+        mixedCharacters = mixedCharacters.concat(lowerCasedLetters);
+        chosenCharacters.push(getRandomElement(lowerCasedLetters));
+    }
+
+    if (options.containsUppercasedLetters) {
+        mixedCharacters = mixedCharacters.concat(upperCasedLetters);
+        chosenCharacters.push(getRandomElement(upperCasedLetters));
+    }
+
+    if (options.containsNumbers) {
+        mixedCharacters = mixedCharacters.concat(numbers);
+        chosenCharacters.push(getRandomElement(numbers));
+    }
+
+    for (let i = 0; i < options.length; i++) {
+        let usedCharacter = getRandomElement(mixedCharacters);
+
+        result.push(usedCharacter);
+    }
+
+    for (let i = 0; i < chosenCharacters.length; i++) {
+        result[i] = chosenCharacters[i];
+    }
+
+    return result.join('');
+}
+
 
 let generateBtn = document.querySelector('#generate');
 
 function writePassword() {
 
-    let password = PasswordRequirements();
+    let password = generatePword();
     let passwordText = document.querySelector('#password');
 
     passwordText.value = password;
